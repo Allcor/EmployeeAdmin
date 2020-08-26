@@ -46,6 +46,7 @@ namespace EmployeeAdminVital10.Pages.Admin.EmployeeAdmin
 
                 if (Employee.PartnerId > 0)
                 {
+                    //now we have a Id for current Employee, set it for chosen partner
                     var EmployeeToPartner = await _db.Employee.FindAsync(Employee.PartnerId);
                     EmployeeToPartner.PartnerId = Employee.Id;
                     await _db.SaveChangesAsync();

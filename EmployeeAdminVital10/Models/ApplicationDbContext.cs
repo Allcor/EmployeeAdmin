@@ -17,6 +17,5 @@ namespace EmployeeAdminVital10.Models
 
         public DbSet<Employee> Employee { get; set; }
 
-
     }
 }

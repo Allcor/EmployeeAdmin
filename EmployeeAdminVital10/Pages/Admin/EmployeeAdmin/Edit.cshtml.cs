@@ -40,11 +40,13 @@ namespace EmployeeAdminVital10.Pages.Admin.EmployeeAdmin
             {
                 var EmployeeToEdit = await _db.Employee.FindAsync(Employee.Id);
                 if (Employee.PartnerId > 0)
-                { 
+                {
+                    //partner Employee should get EmployeeToEdit as new partner
                     var EmployeeToPartner = await _db.Employee.FindAsync(Employee.PartnerId);
                     EmployeeToPartner.PartnerId = Employee.Id;
                     if (EmployeeToEdit.PartnerId != null && EmployeeToEdit.PartnerId > 0)
                     {
+                        //if EmployeeToEdit had a partner, it will be replaced, remove current from old partner
                         var EmployeeToUnpartner = await _db.Employee.FindAsync(EmployeeToEdit.PartnerId);
                         if (EmployeeToPartner.Id != EmployeeToUnpartner.Id)
                         {
@@ -54,10 +56,12 @@ namespace EmployeeAdminVital10.Pages.Admin.EmployeeAdmin
                 }
                 else
                 {
+                    //check if there was a partner and set it to null
                     if (EmployeeToEdit.PartnerId != null && EmployeeToEdit.PartnerId > 0)
                     {
-                        var EmployeeToPartner = await _db.Employee.FindAsync(EmployeeToEdit.PartnerId);
-                        EmployeeToPartner.PartnerId = null;
+                        //also remove EmployeeToEdit from partner 
+                        var EmployeeToUnpartner = await _db.Employee.FindAsync(EmployeeToEdit.PartnerId);
+                        EmployeeToUnpartner.PartnerId = null;
                     }
                     Employee.PartnerId = null;
                 }
